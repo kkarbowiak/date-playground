@@ -46,11 +46,12 @@ int main(int /* argc */, char * argv[])
         auto const arg = std::string(argv[1]);
 
         auto const [tp, of] = parse(arg);
+        auto const formatted = format(tp, of);
 
         std::cout
             << arg << ":\n    "
             << tp.time_since_epoch().count() << "    " << of.count() << "\n    "
-            << format(tp, of) << '\n';
+            << formatted << '\n';
     }
     catch (std::exception const & e)
     {
