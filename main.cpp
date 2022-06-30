@@ -29,9 +29,11 @@ int main(int /* argc */, char * argv[])
 {
     try
     {
-        auto const [tp, of] = parse(argv[1]);
+        auto const arg = std::string(argv[1]);
 
-        std::cout << argv[1] << ":\n    " << tp.time_since_epoch().count() << "    " << of.count() << "\n";
+        auto const [tp, of] = parse(arg);
+
+        std::cout << arg << ":\n    " << tp.time_since_epoch().count() << "    " << of.count() << "\n";
     }
     catch (std::exception const & e)
     {
