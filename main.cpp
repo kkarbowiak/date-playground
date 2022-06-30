@@ -14,8 +14,8 @@ using chr_m = std::chrono::minutes;
 auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
 {
     auto is = std::istringstream(time_point);
-    auto tp = date::sys_time<std::chrono::milliseconds>();
-    auto of = std::chrono::minutes();
+    auto tp = sys_ms();
+    auto of = chr_m();
 
     is >> date::parse("%FT%T%Ez", tp, of);
     if (is.fail())
