@@ -31,6 +31,11 @@ auto format(loc_ms time_point, chr_m offset) -> std::string
     auto of_seconds = std::chrono::seconds(offset);
     auto os = std::ostringstream();
     date::to_stream(os, "%FT%T%Ez", time_point, nullptr, &of_seconds);
+    if (os.fail())
+    {
+        throw std::runtime_error("cannot format");
+    }
+
     return os.str();
 }
 
