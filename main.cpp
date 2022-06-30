@@ -16,7 +16,7 @@ auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
     auto tp = date::sys_time<std::chrono::milliseconds>();
     auto of = std::chrono::minutes();
 
-    is >> date::parse("", tp, of);
+    is >> date::parse("%FT%T%Ez", tp, of);
     if (is.fail())
     {
         throw std::runtime_error("cannot parse '" + time_point + "'");
