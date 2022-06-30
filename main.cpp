@@ -4,6 +4,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
+#include <cstdlib>
 
 
 using sys_ms = date::sys_time<std::chrono::milliseconds>;
@@ -26,7 +27,17 @@ auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
 
 int main(int /* argc */, char * argv[])
 {
-    auto const [tp, of] = parse(argv[1]);
+    try
+    {
+        auto const [tp, of] = parse(argv[1]);
 
-    std::cout << argv[1] << ":\n    " << tp.time_since_epoch().count() << "    " << of.count() << "\n";
+        std::cout << argv[1] << ":\n    " << tp.time_since_epoch().count() << "    " << of.count() << "\n";
+    }
+    catch (std::exception const & e)
+    {
+        std::cout << "Error: " << e.what() << '\n';
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
