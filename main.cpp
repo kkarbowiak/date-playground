@@ -11,10 +11,10 @@ using sys_ms = date::sys_time<std::chrono::milliseconds>;
 using loc_ms = date::local_time<std::chrono::milliseconds>;
 using chr_m = std::chrono::minutes;
 
-auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
+auto parse(std::string const & time_point) -> std::pair<loc_ms, chr_m>
 {
     auto is = std::istringstream(time_point);
-    auto tp = sys_ms();
+    auto tp = loc_ms();
     auto of = chr_m();
 
     is >> date::parse("%FT%T%Ez", tp, of);
@@ -26,13 +26,11 @@ auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
     return {tp, of};
 }
 
-auto format(sys_ms time_point, chr_m offset) -> std::string
+auto format(loc_ms time_point, chr_m offset) -> std::string
 {
-    auto tp_seconds = time_point.time_since_epoch();
-    auto loc = loc_ms(tp_seconds);
     auto of_seconds = std::chrono::seconds(offset);
     auto os = std::ostringstream();
-    date::to_stream(os, "%FT%T%Ez", loc, nullptr, &of_seconds);
+    date::to_stream(os, "%FT%T%Ez", time_point, nullptr, &of_seconds);
     return os.str();
 }
 
