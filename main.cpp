@@ -25,6 +25,11 @@ auto parse(std::string const & time_point) -> std::pair<sys_ms, chr_m>
     return {tp, of};
 }
 
+auto format(sys_ms time_point, chr_m /* offset */) -> std::string
+{
+    return date::format("%FT%T%Ez", time_point);
+}
+
 int main(int /* argc */, char * argv[])
 {
     try
@@ -33,7 +38,10 @@ int main(int /* argc */, char * argv[])
 
         auto const [tp, of] = parse(arg);
 
-        std::cout << arg << ":\n    " << tp.time_since_epoch().count() << "    " << of.count() << "\n";
+        std::cout
+            << arg << ":\n    "
+            << tp.time_since_epoch().count() << "    " << of.count() << "\n    "
+            << format(tp, of) << '\n';
     }
     catch (std::exception const & e)
     {
